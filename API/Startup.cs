@@ -35,6 +35,7 @@ namespace API
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection")); //Adding connection string from appsettings.Development.json
             });
             services.AddControllers();
+            services.AddCors(); // For adding CORS certificate so as to accept responses from the client project
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -55,6 +56,8 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:4200")); //For accepting requests from our client application
 
             app.UseAuthorization();
 
