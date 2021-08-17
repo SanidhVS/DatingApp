@@ -12,6 +12,7 @@ namespace API.DTOs
         public string  Username { get; set; } //For setting up the username in DTO
 
         [Required] //Used for validation
+        [StringLength(8 , MinimumLength = 4)]
         public string Password { get; set; } //For setting up the password in DTO
     }
 }
