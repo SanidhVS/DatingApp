@@ -1,5 +1,8 @@
 ﻿using API.Data;
+using API.DTOs;
 using API.Entitities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,27 +14,28 @@ using System.Threading.Tasks;
 namespace API.Controllers
 {
 
-    public class UsersController : BaseApiController  //To inherit from BaseApiController base
-    {
-        private DataContext _context;
+    public class UsersController : BaseApiController{  //To inherit from BaseApiController base
 
-        public UsersController(DataContext context )
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        public UsersController(IUserRepository userRepository, IMapper mapper )
         {
-            _context = context;
+            _mapper = mapper;
+            _userRepository = userRepository;
         }
 
-        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()  //To create an endpoint which returns all the users of the type AppUser which is a list hence IEnumerable is used
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()  //To create an endpoint which returns all the users of the type AppUser which is a list hence IEnumerable is used
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userRepository.GetMembersAsync();
+            //var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users); //Will map users with memberDto and return MemberDto type value
+            return Ok(users);
         }
 
-        [Authorize]
-        [HttpGet("{id}")] //id is the route parameter
-        public async Task<ActionResult<AppUser>> GetUser(int id)  //To create an endpoint which returns selected  user of the id mentioned of type AppUser which is a list hence IEnumerable is used
+        [HttpGet("{username}")] //username is the route parameter
+        public async Task<ActionResult<MemberDto>> GetUser(string username)  //To create an endpoint which returns selected  user of the id mentioned of type AppUser which is a list hence IEnumerable is used
         {
-            return await _context.Users.FindAsync(id);
+            return await _userRepository.GetMemberAsync(username); //Will map user with memberDto and return MemberDto type value
         }
     }
 }
