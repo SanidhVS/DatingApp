@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-
+    [Authorize]
+    [AllowAnonymous]
     public class UsersController : BaseApiController{  //To inherit from BaseApiController base
 
         private readonly IMapper _mapper;

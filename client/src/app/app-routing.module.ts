@@ -18,7 +18,7 @@ const routes: Routes = [  //This represents the different routing that we want, 
     canActivate : [AuthGuard], //Will route to MemberListComponent, AuthGuard is used for preventing unauthorized access
     children : [
       {path: 'members', component: MemberListComponent}, 
-      {path: 'members/:id', component: MemberDetailComponent}, //Will route to MemberDetailComponent
+      {path: 'members/:username', component: MemberDetailComponent}, //Will route to MemberDetailComponent
       {path: 'lists', component: ListsComponent}, //Will route to ListsComponent
       {path: 'messages', component: MessagesComponent}, //Will route to MessagesComponent
 
