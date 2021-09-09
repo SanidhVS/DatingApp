@@ -37,6 +37,7 @@ export class TestErrorsComponent implements OnInit {
     })
   }
   get401Error(){  //For getting 500 error, endpoint from server
+    debugger;
     this.http.get(this.baseUrl + 'Buggy/auth').subscribe(response => {
       console.log(response);
     }, error =>{

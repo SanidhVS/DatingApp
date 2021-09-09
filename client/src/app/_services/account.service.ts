@@ -18,6 +18,7 @@ export class AccountService {
   }
 
   login(model : any){
+    debugger;
     return this.http.post(this.baseURL + 'account/login' , model).pipe( //This refers to the the api that we created in AccountController.cs and pass the parameter model as the parameter for backend
       map((response : User) =>
       {
@@ -26,9 +27,12 @@ export class AccountService {
           localStorage.setItem('user', JSON.stringify(user));   //Sets up the user log in in local storage of the browser for persisting the login
           this.currentUserSource.next(user); //grabs the next observable
         }
+        console.log(response);
+        
       }
       )
-    ); 
+    )
+    
   }
 
   logout(){

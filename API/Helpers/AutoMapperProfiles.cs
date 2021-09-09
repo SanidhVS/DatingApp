@@ -20,6 +20,7 @@ namespace API.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(
                     src => src.DateOfBirth.CalculateAge()));  //For removing the getage which returned password details
             CreateMap<Photo, PhotoDto>();//This is will map the Properties from Photo to PhotoDto
+            CreateMap<MemberUpdateDto, AppUser>();
         }
 
     }
