@@ -16,7 +16,9 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly); //In order to use automapper in the project
+            services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IUserRepository, UserRepository>(); //This will make use of the newly introduced repository pattern
             services.AddDbContext<DataContext>(options => //For setting up the connection string for our application
             {
